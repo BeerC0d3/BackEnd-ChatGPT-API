@@ -1,0 +1,12 @@
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\bin\Debug\net6.0\ChatGptNet.deps.json
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\bin\Debug\net6.0\ChatGptNet.dll
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\bin\Debug\net6.0\ChatGptNet.xml
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ChatGptNet.csproj.AssemblyReference.cache
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ChatGptNet.GeneratedMSBuildEditorConfig.editorconfig
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ChatGptNet.AssemblyInfoInputs.cache
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ChatGptNet.AssemblyInfo.cs
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ChatGptNet.csproj.CoreCompileInputs.cache
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ChatGptNet.sourcelink.json
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ChatGptNet.dll
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\refint\ChatGptNet.dll
+D:\OneDrive\Lennken Group\OneDrive - Lennken Group\Ejemplos\ChatGptNet-master\src\ChatGptNet\obj\Debug\net6.0\ref\ChatGptNet.dll

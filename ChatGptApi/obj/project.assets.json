@@ -1,0 +1,86 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "ChatGptNet/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/ChatGptNet.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ChatGptNet.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ChatGptNet/1.0.0": {
+      "type": "project",
+      "path": "../ChatGptNet/ChatGptNet.csproj",
+      "msbuildProject": "../ChatGptNet/ChatGptNet.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "ChatGptNet >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\diego.luna\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Projects_Devops\\IA_Demo_IntegraS3\\01 - API ChatGPT\\ChatGptApi\\ChatGptApi.csproj",
+      "projectName": "ChatGptApi",
+      "projectPath": "C:\\Projects_Devops\\IA_Demo_IntegraS3\\01 - API ChatGPT\\ChatGptApi\\ChatGptApi.csproj",
+      "packagesPath": "C:\\Users\\diego.luna\\.nuget\\packages\\",
+      "outputPath": "C:\\Projects_Devops\\IA_Demo_IntegraS3\\01 - API ChatGPT\\ChatGptApi\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\diego.luna\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "C:\\Projects_Devops\\IA_Demo_IntegraS3\\01 - API ChatGPT\\ChatGptNet\\ChatGptNet.csproj": {
+              "projectPath": "C:\\Projects_Devops\\IA_Demo_IntegraS3\\01 - API ChatGPT\\ChatGptNet\\ChatGptNet.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

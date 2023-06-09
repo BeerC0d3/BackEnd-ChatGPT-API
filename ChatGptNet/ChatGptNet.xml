@@ -1,0 +1,603 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChatGptNet</name>
+    </assembly>
+    <members>
+        <member name="T:ChatGptNet.ChatGptOptions">
+            <summary>
+            Options class that provides settings for configuring ChatGPT
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.ApiKey">
+            <summary>
+            Gets or sets the API Key to access the service.
+            </summary>
+            <remarks>
+            See <see href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key">Where do I find my Secret API Key?</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.MessageLimit">
+            <summary>
+            Gets or sets the maximum number of messages to use for chat completion (default: 10).
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.MessageExpiration">
+            <summary>
+            Gets or sets the expiration for cached conversation messages (default: 1 hour).
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.ThrowExceptionOnError">
+            <summary>
+            Gets or sets a value that determines whether to throw a <see cref="T:ChatGptNet.Exceptions.ChatGptException"/> when an error occurred (default: <see langword="true"/>). If this property is set to <see langword="false"></see>, API errors are returned in the <see cref="T:ChatGptNet.Models.ChatGptResponse"/> object.
+            </summary>
+            <see cref="T:ChatGptNet.Exceptions.ChatGptException"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptResponse"/>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.Organization">
+            <summary>
+            Gets or sets a value that determines the organization the user belongs to.
+            </summary>
+            <remarks>For users who belong to multiple organizations, you can pass a header to specify which organization is used for an API request. Usage from these API requests will count against the specified organization's subscription quota.</remarks>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.DefaultModel">
+            <summary>
+            Gets or sets the default model for chat completion. (default: <see cref="F:ChatGptNet.Models.ChatGptModels.Gpt35Turbo"/>).
+            </summary>
+            <see cref="T:ChatGptNet.Models.ChatGptModels"/>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.DefaultParameters">
+            <summary>
+             Gets or sets the default parameters for chat completion.
+            </summary>
+            <see cref="T:ChatGptNet.Models.ChatGptParameters"/>
+        </member>
+        <member name="P:ChatGptNet.ChatGptOptions.User">
+            <summary>
+            Gets or sets the user identification for chat completion, which can help OpenAI to monitor and detect abuse.
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/guides/safety-best-practices/end-user-ids">Safety best practices</see> for more information.
+            </remarks>
+        </member>
+        <member name="T:ChatGptNet.ChatGptServiceCollectionExtensions">
+            <summary>
+            Provides extension methods for adding ChatGPT support in NET applications.
+            </summary>
+        </member>
+        <member name="M:ChatGptNet.ChatGptServiceCollectionExtensions.AddChatGpt(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{ChatGptNet.ChatGptOptions})">
+            <summary>
+            Registers a <see cref="T:ChatGptNet.ChatGptClient"/> instance with the specified options.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add services to.</param>
+            <param name="setupAction">The <see cref="T:System.Action`1"/> to configure the provided <see cref="T:ChatGptNet.ChatGptOptions"/>.</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+            <remarks>This method automatically adds a <see cref="T:Microsoft.Extensions.Caching.Memory.MemoryCache"/> that is used to save chat messages for completion.</remarks>
+            <seealso cref="T:ChatGptNet.ChatGptOptions"/>
+            <seealso cref="M:Microsoft.Extensions.DependencyInjection.MemoryCacheServiceCollectionExtensions.AddMemoryCache(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
+        </member>
+        <member name="M:ChatGptNet.ChatGptServiceCollectionExtensions.AddChatGpt(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+            <summary>
+            Registers a <see cref="T:ChatGptNet.ChatGptClient"/> instance reading configuration from the specified <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> source.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add services to.</param>
+            <param name="configuration">The <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> being bound.</param>
+            <param name="sectionName">The name of the configuration section that holds ChatGPT settings (default: ChatGPT).</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+            <remarks>This method automatically adds a <see cref="T:Microsoft.Extensions.Caching.Memory.MemoryCache"/> that is used to save chat messages for completion.</remarks>
+            <seealso cref="T:ChatGptNet.ChatGptOptions"/>
+            <seealso cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>
+            <seealso cref="M:Microsoft.Extensions.DependencyInjection.MemoryCacheServiceCollectionExtensions.AddMemoryCache(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
+        </member>
+        <member name="M:ChatGptNet.ChatGptServiceCollectionExtensions.AddChatGpt(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{System.IServiceProvider,ChatGptNet.ChatGptOptions})">
+            <summary>
+            Registers a <see cref="T:ChatGptNet.ChatGptClient"/> instance using dynamic options.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add services to.</param>
+            <param name="setupAction">The <see cref="T:System.Action`2"/> to configure the provided <see cref="T:ChatGptNet.ChatGptOptions"/>.</param>
+            <returns>A reference to this instance after the operation has completed.</returns>
+            <remarks>Use this this method if it is necessary to dynamically set options like <see cref="P:ChatGptNet.ChatGptOptions.ApiKey"/> (for example, using other services via dependency injection).
+            This method automatically adds a <see cref="T:Microsoft.Extensions.Caching.Memory.MemoryCache"/> that is used to save chat messages for completion.
+            </remarks>
+            <seealso cref="T:ChatGptNet.ChatGptOptions"/>
+            <seealso cref="T:System.IServiceProvider"/>
+            <seealso cref="M:Microsoft.Extensions.DependencyInjection.MemoryCacheServiceCollectionExtensions.AddMemoryCache(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
+        </member>
+        <member name="T:ChatGptNet.Exceptions.ChatGptException">
+            <summary>
+            Represents errors that occur during API invocation.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Exceptions.ChatGptException.Error">
+            <summary>
+            Gets the detailed error information.
+            </summary>
+            <seealso cref="T:ChatGptNet.Models.ChatGptError"/>
+        </member>
+        <member name="M:ChatGptNet.Exceptions.ChatGptException.#ctor(ChatGptNet.Models.ChatGptError,System.Net.HttpStatusCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ChatGptNet.Exceptions.ChatGptException"/> class with the specified <paramref name="error"/> details.
+            </summary>
+            <param name="error">The detailed error information</param>
+            <param name="statusCode">The HTTP status code</param>
+            <seealso cref="T:ChatGptNet.Models.ChatGptError"/>
+            <seealso cref="T:System.Net.Http.HttpRequestException"/>
+        </member>
+        <member name="T:ChatGptNet.Extensions.ChatGptResponseExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:ChatGptNet.Models.ChatGptResponse"/> class.
+            </summary>
+            <seealso cref="T:ChatGptNet.Models.ChatGptResponse"/>
+        </member>
+        <member name="M:ChatGptNet.Extensions.ChatGptResponseExtensions.AsDeltas(System.Collections.Generic.IAsyncEnumerable{ChatGptNet.Models.ChatGptResponse})">
+            <summary>
+            Returns an <see cref="T:System.Collections.Generic.IAsyncEnumerable`1"/> that allows to enumerate all the partial message deltas.
+            </summary>
+            <param name="responses">The source <see cref="T:System.Collections.Generic.IAsyncEnumerable`1"/>.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1"/> that allows to enumerate all the partial message deltas.</returns>
+            <seealso cref="T:ChatGptNet.Models.ChatGptResponse"/>
+        </member>
+        <member name="T:ChatGptNet.IChatGptClient">
+            <summary>
+            Provides methods to interact with ChatGPT.
+            </summary>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.SetupAsync(System.String)">
+            <summary>
+            Setups a new conversation with a system message, that is used to influence assistant behavior.
+            </summary>
+            <param name="message">The system message.</param>
+            <returns>The unique identifier of the new conversation.</returns>
+            <remarks>This method creates a new conversation with a system message and a random Conversation Id. Then, call <see cref="M:ChatGptNet.IChatGptClient.AskAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)"/> with this Id to start the actual conversation.</remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:ChatGptNet.IChatGptClient.AskAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.SetupAsync(System.Guid,System.String)">
+            <summary>
+            Setups a conversation with a system message, that is used to influence assistant behavior.
+            </summary>
+            <param name="conversationId">The unique identifier of the conversation, used to automatically retrieve previous messages in the chat history.</param>
+            <param name="message">The system message.</param>
+            <remarks>This method creates a new conversation, with a system message and the given <paramref name="conversationId"/>. If a conversation with this Id already exists, it will be automatically cleared. Then, call <see cref="M:ChatGptNet.IChatGptClient.AskAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)"/> to start the actual conversation.</remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:ChatGptNet.IChatGptClient.AskAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.AskAsync(System.String,ChatGptNet.Models.ChatGptParameters,System.Threading.CancellationToken)">
+            <summary>
+            Requests a new chat interaction using the default completion model specified in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultModel"/> property.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="parameters">A <see cref="T:ChatGptNet.Models.ChatGptParameters"/> object used to override the default completion parameters in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultParameters"/> property.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> that can be used by other objects or threads to receive notice of cancellation.</param>
+            <returns>The chat completion response.</returns>
+            <remarks>This method automatically starts a new conservation with a random Conversation Id, that will be returned in the <see cref="T:ChatGptNet.Models.ChatGptResponse"/>. Subsequent calls to this method must provide the same <see cref="P:ChatGptNet.Models.ChatGptResponse.ConversationId"/> value, so that previous messages will be automatically used to continue the conversation.</remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+            <exception cref="T:ChatGptNet.Exceptions.ChatGptException">An error occurred while calling the API and the <see cref="P:ChatGptNet.ChatGptOptions.ThrowExceptionOnError"/> is <see langword="true"/>.</exception>
+            <seealso cref="T:ChatGptNet.Models.ChatGptRequest"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptResponse"/>
+            <seealso cref="T:ChatGptNet.ChatGptOptions"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptParameters"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.AskAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Requests a chat interaction.
+            </summary>
+            <param name="conversationId">The unique identifier of the conversation, used to automatically retrieve previous messages in the chat history.</param>
+            <param name="message">The message.</param>
+            <param name="parameters">A <seealso cref="T:ChatGptNet.Models.ChatGptParameters"/> object used to override the default completion parameters in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultParameters"/> property.</param>
+            <param name="model">The chat completion model to use. If model is <see langword="null"/>, then the one specified in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultModel"/> property will be used.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> that can be used by other objects or threads to receive notice of cancellation.</param>
+            <returns>The chat completion response.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+            <exception cref="T:ChatGptNet.Exceptions.ChatGptException">An error occurred while calling the API and the <see cref="P:ChatGptNet.ChatGptOptions.ThrowExceptionOnError"/> is <see langword="true"/>.</exception>
+            <seealso cref="T:ChatGptNet.Models.ChatGptRequest"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptResponse"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptParameters"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.AskStreamAsync(System.String,ChatGptNet.Models.ChatGptParameters,System.Threading.CancellationToken)">
+            <summary>
+            Requests a new chat interaction (using the default completion model specified in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultModel"/> property) with streaming response, like in ChatGPT.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="parameters">A <see cref="T:ChatGptNet.Models.ChatGptParameters"/> object used to override the default completion parameters in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultParameters"/> property.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> that can be used by other objects or threads to receive notice of cancellation.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1"/> that allows to enumerate all the streaming responses, each of them containing a partial message delta.</returns>
+            <remarks>
+            This method automatically starts a new conservation with a random Conversation Id, that will be returned in the <see cref="T:ChatGptNet.Models.ChatGptResponse"/>. Subsequent calls to this method must provide the same <see cref="P:ChatGptNet.Models.ChatGptResponse.ConversationId"/> value, so that previous messages will be automatically used to continue the conversation.
+            When using steaming, partial message deltas will be sent. Tokens will be sent as data-only server-sent events as they become available.
+            </remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+            <exception cref="T:ChatGptNet.Exceptions.ChatGptException">An error occurred while calling the API and the <see cref="P:ChatGptNet.ChatGptOptions.ThrowExceptionOnError"/> is <see langword="true"/>.</exception>
+            <seealso cref="T:ChatGptNet.Models.ChatGptRequest"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptResponse"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptParameters"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.AskStreamAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Requests a chat interaction with streaming response, like in ChatGPT.
+            </summary>
+            <param name="conversationId">The unique identifier of the conversation, used to automatically retrieve previous messages in the chat history.</param>
+            <param name="message">The message.</param>
+            <param name="parameters">A <see cref="T:ChatGptNet.Models.ChatGptParameters"/> object used to override the default completion parameters in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultParameters"/> property.</param>
+            <param name="model">The chat completion model to use. If model is <see langword="null"/>, then the one specified in the <see cref="P:ChatGptNet.ChatGptOptions.DefaultModel"/> property will be used.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> that can be used by other objects or threads to receive notice of cancellation.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IAsyncEnumerable`1"/> that allows to enumerate all the streaming responses, each of them containing a partial message delta.</returns>
+            <remarks> When using steaming, partial message deltas will be sent. Tokens will be sent as data-only server-sent events as they become available.</remarks>
+            <exception cref="T:System.ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+            <exception cref="T:ChatGptNet.Exceptions.ChatGptException">An error occurred while calling the API and the <see cref="P:ChatGptNet.ChatGptOptions.ThrowExceptionOnError"/> is <see langword="true"/>.</exception>
+            <seealso cref="T:ChatGptNet.Models.ChatGptRequest"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptResponse"/>
+            <seealso cref="T:ChatGptNet.Models.ChatGptParameters"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.GetConversationAsync(System.Guid)">
+            <summary>
+            Retrieves a chat conversation from the cache.
+            </summary>
+            <param name="conversationId">The unique identifier of the conversation.</param>
+            <returns>The message list of the conversation, or <see cref="M:System.Linq.Enumerable.Empty``1"/> if the Conversation Id does not exist.</returns>
+            <seealso cref="T:ChatGptNet.Models.ChatGptMessage"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.LoadConversationAsync(System.Collections.Generic.IEnumerable{ChatGptNet.Models.ChatGptMessage})">
+            <summary>
+            Loads messages into a new conversation.
+            </summary>
+            <param name="messages">Messages to load into a new conversation.</param>
+            <returns>The unique identifier of the new conversation.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="messages"/> is <see langword="null"/>.</exception>
+            <remarks>
+            <para>This method creates a new conversation with a random Conversation Id. Then, call <see cref="M:ChatGptNet.IChatGptClient.AskAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)"/> with this Id to start the actual conversation.</para>
+            <para>The total number of messages never exceeds the message limit defined in <see cref="P:ChatGptNet.ChatGptOptions.MessageLimit"/>. If <paramref name="messages"/> contains more, only the latest ones are loaded.</para>
+            </remarks>
+            <seealso cref="P:ChatGptNet.ChatGptOptions.MessageLimit"/>
+            <seealso cref="M:ChatGptNet.IChatGptClient.AskStreamAsync(System.Guid,System.String,ChatGptNet.Models.ChatGptParameters,System.String,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.LoadConversationAsync(System.Guid,System.Collections.Generic.IEnumerable{ChatGptNet.Models.ChatGptMessage},System.Boolean)">
+            <summary>
+            Loads messages into conversation history.
+            </summary>
+            <param name="conversationId">The unique identifier of the conversation.</param>
+            <param name="messages">The messages to load into conversation history.</param>
+            <param name="replaceHistory"><see langword="true"/> to replace all the existing messages; <see langword="false"/> to mantain them.</param>
+            <returns>The unique identifier of the conversation.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="messages"/> is <see langword="null"/>.</exception>
+            <remarks>The total number of messages never exceeds the message limit defined in <see cref="P:ChatGptNet.ChatGptOptions.MessageLimit"/>. If <paramref name="messages"/> contains more, only the latest ones are loaded.</remarks>
+            <seealso cref="P:ChatGptNet.ChatGptOptions.MessageLimit"/>
+        </member>
+        <member name="M:ChatGptNet.IChatGptClient.DeleteConversationAsync(System.Guid,System.Boolean)">
+            <summary>
+            Deletes a chat conversation, clearing all the history.
+            </summary>
+            <param name="conversationId">The unique identifier of the conversation.</param>
+            <param name="preserveSetup"><see langword="true"/> to maintain the system message that has been specified with the <see cref="M:ChatGptNet.IChatGptClient.SetupAsync(System.Guid,System.String)"/> method.</param>
+            <returns>The <see cref="T:System.Threading.Tasks.Task"/> corresponding to the asynchronous operation.</returns>
+            <seealso cref="M:ChatGptNet.IChatGptClient.SetupAsync(System.Guid,System.String)"/>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptChoice">
+            <summary>
+            Represent a chat completion choice.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptChoice.Index">
+            <summary>
+            Gets or sets the index of the choice in the list.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptChoice.Message">
+            <summary>
+            Gets or sets the message associated with this <see cref="T:ChatGptNet.Models.ChatGptChoice"/>.
+            </summary>
+            <seealso cref="T:ChatGptNet.Models.ChatGptChoice"/>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptChoice.Delta">
+            <summary>
+            When using streaming responses, gets or sets the partial message delta associated with this <see cref="T:ChatGptNet.Models.ChatGptChoice"/>.
+            </summary>
+            <see cref="P:ChatGptNet.Models.ChatGptRequest.Stream"/>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptChoice.FinishReason">
+            <summary>
+            Gets or sets a value specifying why the choice has been returned. Possible values are: <em>stop</em> (API returned complete model output), <em>length</em> (incomplete model output due to max_tokens parameter or token limit), <em>content_filter</em> (omitted content due to a flag from content filters) or <em>null</em> (API response still in progress or incomplete).
+            </summary>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptError">
+            <summary>
+            Contains information about the error occurred while invoking the service.
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/guides/error-codes">Error codes</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptError.Message">
+            <summary>
+            Gets or sets the error message.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptError.Type">
+            <summary>
+            Gets or sets the error type.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptError.Parameter">
+            <summary>
+            Gets or sets the parameter that caused the error.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptError.Code">
+            <summary>
+            Gets or sets the error code.
+            </summary>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptMessage">
+            <summary>
+            Represents a single chat message.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptMessage.Role">
+            <summary>
+            Gets or sets the role (source) of the message. Valid values are: <em>system</em>, <em>user</em> and <em>assistant</em>.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptMessage.Content">
+            <summary>
+            The content of the message.
+            </summary>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptModels">
+            <summary>
+            Contains all the currently supported chat completion models.
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/models/overview">Models overview</see> for more information.
+            </remarks>
+        </member>
+        <member name="F:ChatGptNet.Models.ChatGptModels.Gpt35Turbo">
+            <summary>
+            GPT-3.5 model can understand and generate natural language or code and it is optimized for chat.
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/models/gpt-3-5">GPT-3.5</see> for more information.
+            </remarks>
+        </member>
+        <member name="F:ChatGptNet.Models.ChatGptModels.Gpt4">
+            <summary>
+            GPT-4 is a large multimodal model that can solve difficult problems with greater accuracy than any of our previous models, thanks to its broader general knowledge and advanced reasoning capabilities. is optimized for chat but works well for traditional completions tasks.
+            </summary>
+            <remarks>
+            This model is currently in a limited beta and only accessible to those who have been granted access. See <see href="https://platform.openai.com/docs/models/gpt-4">GPT-4</see> for more information.
+            </remarks>
+            <seealso cref="F:ChatGptNet.Models.ChatGptModels.Gpt4_32k"/>
+        </member>
+        <member name="F:ChatGptNet.Models.ChatGptModels.Gpt4_32k">
+            <summary>
+            A model with the same capabilities as the base <see cref="F:ChatGptNet.Models.ChatGptModels.Gpt4"/> model, but with 4x the context length.
+            </summary>
+            <remarks>
+            This model is currently in a limited beta and only accessible to those who have been granted access. See <see href="https://platform.openai.com/docs/models/gpt-4">GPT-4</see> for more information.
+            </remarks>
+            <seealso cref="F:ChatGptNet.Models.ChatGptModels.Gpt4"/>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptParameters">
+            <summary>
+            Represents chat completion parameters.
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/api-reference/chat/create">Create chat completion</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptParameters.Temperature">
+            <summary>
+            Gets or sets what sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic (default: 1).
+            </summary>
+            <remarks>
+            It is generally recommend altering this value or <see cref="P:ChatGptNet.Models.ChatGptParameters.TopP"/> but not both.
+            </remarks>
+            <seealso cref="P:ChatGptNet.Models.ChatGptParameters.TopP"/>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptParameters.TopP">
+            <summary>
+            Gets or sets an alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with <see cref="P:ChatGptNet.Models.ChatGptParameters.TopP"/> probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered (default: 1).
+            </summary>
+            <remarks>
+            It is generally recommend altering this value or <see cref="P:ChatGptNet.Models.ChatGptParameters.Temperature"/> but not both.
+            </remarks>
+            <seealso cref="P:ChatGptNet.Models.ChatGptParameters.Temperature"/>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptParameters.Choices">
+            <summary>
+            Gets or sets how many chat completion choices to generate for each input message (default: 1).
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptParameters.MaxTokens">
+            <summary>
+            Gets or sets the maximum number of tokens to generate in the chat completion. The total length of input tokens and generated tokens is limited by the model's context length.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptParameters.PresencePenalty">
+            <summary>
+            Gets or sets the presence penalties for chat completion. Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics (default: 0).
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/api-reference/parameter-details">Parameter details</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptParameters.FrequencyPenalty">
+            <summary>
+            Gets or sets the frequency penalties for chat completion. Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim (default: 0).
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/api-reference/parameter-details">Parameter details</see> for more information.
+            </remarks>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptRequest">
+            <summary>
+            Represents a request for a chat completions.
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/api-reference/chat/create">Create chat completion</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.Model">
+            <summary>
+            Gets or sets the ID of the model to use. Currently, only <em>gpt-3.5-turbo</em> and <em>gpt-3.5-turbo-0301</em> are supported.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.Messages">
+            <summary>
+            Gets or sets the messages to generate chat completions for.
+            </summary>
+            <seealso cref="T:ChatGptNet.Models.ChatGptMessage"/>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.Stream">
+            <summary>
+            Gets or sets a value that specify if response will be sent in streaming as partial message deltas.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.Temperature">
+            <summary>
+            Gets or sets what sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic (default: 1).
+            </summary>
+            <remarks>
+            It is generally recommend altering this value or <see cref="P:ChatGptNet.Models.ChatGptRequest.TopP"/> but not both.
+            </remarks>
+            <seealso cref="P:ChatGptNet.Models.ChatGptRequest.TopP"/>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.TopP">
+            <summary>
+            Gets or sets an alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with <see cref="P:ChatGptNet.Models.ChatGptRequest.TopP"/> probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered (default: 1).
+            </summary>
+            <remarks>
+            It is generally recommend altering this value or <see cref="P:ChatGptNet.Models.ChatGptRequest.Temperature"/> but not both.
+            </remarks>
+            <seealso cref="P:ChatGptNet.Models.ChatGptRequest.Temperature"/>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.Choices">
+            <summary>
+            Gets or sets how many chat completion choices to generate for each input message (default: 1).
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.MaxTokens">
+            <summary>
+            Gets or sets the maximum number of tokens to generate in the chat completion. The total length of input tokens and generated tokens is limited by the model's context length.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.PresencePenalty">
+            <summary>
+            Gets or sets the presence penalties for chat completion. Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics (default: 0).
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/api-reference/parameter-details">Parameter details</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.FrequencyPenalty">
+            <summary>
+            Gets or sets the frequency penalties for chat completion. Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim (default: 0).
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/api-reference/parameter-details">Parameter details</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptRequest.User">
+            <summary>
+            Gets or sets the user identification for chat completion, which can help OpenAI to monitor and detect abuse.
+            </summary>
+            <remarks>
+            See <see href="https://platform.openai.com/docs/guides/safety-best-practices/end-user-ids">Safety best practices</see> for more information.
+            </remarks>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptResponse">
+            <summary>
+            Represents a chat completion response.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.Id">
+            <summary>
+            Gets or sets the Id of the response
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.Object">
+            <summary>
+            Gets or sets the source object for this response.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.ConversationId">
+            <summary>
+            Gets or sets the Conversation Id, that is used to group messages of the same conversation.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.CreatedAt">
+            <summary>
+            Gets or sets the UTC date and time at which the response has been generated.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.Usage">
+            <summary>
+            Gets or sets information about token usage.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.Error">
+            <summary>
+            Gets or sets the error occurred during the chat completion execution, if any.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.Choices">
+            <summary>
+            Gets or sets the list of choices that has been provided by chat completion.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptResponse.IsSuccessful">
+            <summary>
+            Gets a value that determines if the response was successful.
+            </summary>
+        </member>
+        <member name="M:ChatGptNet.Models.ChatGptResponse.GetMessage">
+            <summary>
+            Gets the content of the first choice, if available.
+            </summary>
+            <returns>The content of the first choice, if available</returns>
+            <remarks>When using streaming responses, the <see cref="M:ChatGptNet.Models.ChatGptResponse.GetMessage"/> property return a partial message delta.</remarks>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptRoles">
+            <summary>
+            Contains constants for all the possible roles.
+            </summary>
+        </member>
+        <member name="F:ChatGptNet.Models.ChatGptRoles.System">
+            <summary>
+            The system role.
+            </summary>
+        </member>
+        <member name="F:ChatGptNet.Models.ChatGptRoles.User">
+            <summary>
+            The user role.
+            </summary>
+        </member>
+        <member name="F:ChatGptNet.Models.ChatGptRoles.Assistant">
+            <summary>
+            The assistant role.
+            </summary>
+        </member>
+        <member name="T:ChatGptNet.Models.ChatGptUsage">
+            <summary>
+            Contains information about the API usage.
+            </summary>
+            <remarks>
+            See <see href="https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them">What are tokens and how to count them?</see> for more information.
+            </remarks>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptUsage.PromptTokens">
+            <summary>
+            Gets or sets the number of tokens of the request.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptUsage.CompletionTokens">
+            <summary>
+            Gets or sets the number of token of the response.
+            </summary>
+        </member>
+        <member name="P:ChatGptNet.Models.ChatGptUsage.TotalTokens">
+            <summary>
+            Gets the total number of tokens.
+            </summary>
+        </member>
+    </members>
+</doc>
